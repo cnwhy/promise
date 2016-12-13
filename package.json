@@ -1,0 +1,25 @@
+{
+  "name": "promise",
+  "version": "1.0.0",
+  "description": "promise A+ achieved",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cnwhy/promise.git"
+  },
+  "keywords": [
+    "promise"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cnwhy/promise/issues"
+  },
+  "homepage": "https://github.com/cnwhy/promise#readme",
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
