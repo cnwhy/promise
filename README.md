@@ -1,3 +1,9 @@
-# promise
-promise A+ achieved. src文件夹下多种实现方式;
+# easy-promise
+Pnly Promises/A+ implementation
 
+API
+ - `new Promise`
+ - `Promise.defer`
+ - `Promise.resolve`
+ - `Promise.resolve`
+ - `.then`

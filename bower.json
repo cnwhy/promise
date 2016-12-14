@@ -1,0 +1,20 @@
+{
+  "name": "easy-promise",
+  "description": "Pnly Promises/A+ implementation",
+  "main": "dist/easy-promise.js",
+  "authors": [
+    "cnwhy <w.why@163.com>"
+  ],
+  "license": "BSD",
+  "keywords": [
+    "promise"
+  ],
+  "homepage": "https://github.com/cnwhy/promise",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,10 +1,10 @@
 {
-  "name": "promise",
-  "version": "1.0.0",
-  "description": "promise A+ achieved",
-  "main": "index.js",
+  "name": "easy-promise",
+  "version": "0.0.1",
+  "description": "Pnly Promises/A+ implementation",
+  "main": "nextTick.js",
   "scripts": {
-    "test": "mocha"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,11 @@
   },
   "homepage": "https://github.com/cnwhy/promise#readme",
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
     "promises-aplus-tests": "^2.1.2"
   }
 }

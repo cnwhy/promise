@@ -1,0 +1,1 @@
+module.exports = require("./src")(function(fn){setTimeout(fn,0)});
