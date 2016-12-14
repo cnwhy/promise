@@ -5,5 +5,5 @@ API
  - `new Promise`
  - `Promise.defer`
  - `Promise.resolve`
- - `Promise.resolve`
+ - `Promise.reject`
  - `.then`
