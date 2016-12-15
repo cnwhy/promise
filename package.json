@@ -1,10 +1,11 @@
 {
   "name": "easy-promise",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Pnly Promises/A+ implementation",
   "main": "nextTick.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -13,8 +14,8 @@
   "keywords": [
     "promise"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "cnwhy <w.why@163.com>",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/cnwhy/promise/issues"
   },
@@ -22,6 +23,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
+    "gulp-header": "^1.8.8",
     "gulp-mocha": "^3.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",

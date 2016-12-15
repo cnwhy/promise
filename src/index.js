@@ -1,5 +1,4 @@
 "use strict";
-//参考官方代码示例改动
 module.exports = function(nextTick){
 	function Resolve(promise, x) {
 		if(x instanceof Promise_){

@@ -1,3 +1,8 @@
+/*!
+ * easy-promise v0.0.2
+ * Homepage https://github.com/cnwhy/promise#readme
+ * License BSD
+ */
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (name, factory) {
     if (typeof define === 'function' && (define.amd || define.cmd)) {
@@ -16,7 +21,6 @@
 module.exports = require("./src")(function(fn){setTimeout(fn,0)});
 },{"./src":3}],3:[function(require,module,exports){
 "use strict";
-//参考官方代码示例改动
 module.exports = function(nextTick){
 	function Resolve(promise, x) {
 		if(x instanceof Promise_){
