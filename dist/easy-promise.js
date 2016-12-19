@@ -1,5 +1,5 @@
 /*!
- * easy-promise v0.0.2
+ * easy-promise v0.0.3
  * Homepage https://github.com/cnwhy/promise#readme
  * License BSD
  */
@@ -22,11 +22,11 @@ module.exports = require("./src")(function(fn){setTimeout(fn,0)});
 },{"./src":3}],3:[function(require,module,exports){
 "use strict";
 module.exports = function(nextTick){
+	var FUN = function(){};
 	function Resolve(promise, x) {
-		if(x instanceof Promise_){
+		if(isPromise(x)){
 			x.then(promise.resolve,promise.reject)
-		};
-		if (x && (typeof x === 'function' || typeof x === 'object')) {
+		}else if (x && (typeof x === 'function' || typeof x === 'object')) {
 			var called = false,then;
 			try {
 				then = x.then;
@@ -54,36 +54,49 @@ module.exports = function(nextTick){
 		}
 	}
 
+	function isPromise(obj){
+		return obj instanceof Promise_;
+	}
+
+	function bind(fun,self){
+		var arg = Array.prototype.slice.call(arguments,2);
+		return function(){
+			fun.apply(self,arg.concat(Array.prototype.slice.call(arguments)));
+		}
+	}
+
 	function Promise_(fun){
 		//var defer = this.defer = new Defer(this);
 		var self = this;
 		this.status = -1;  //pending:-1 ; fulfilled:1 ; rejected:0
 		this._events = [];
 		var lock = false;
+
 		function _resolve(value){
 			changeStatus.call(self,1,value)
 		}
 		function _reject(reason){
 			changeStatus.call(self,0,reason)
 		}
-		this.resolve = function(value){
+
+		function resolve(value){
 			if(lock) return;
 			lock = true;
 			if(self === value){
 				return _reject(new TypeError("The promise and its value refer to the same object"));
 			} 
-			// if(value instanceof Promise_){
-			// 	value.then(_resolve,_reject)
-			// }else{
 			Resolve({resolve:_resolve,reject:_reject},value)
-			//}
 		}
-		this.reject = function(reason){
+		function reject(reason){
 			if(lock) return;
 			lock = true;
 			_reject(reason);
 		}
-		if(typeof fun == "function"){
+
+		this.resolve = resolve;
+		this.reject = reject;
+		
+		if(fun !== FUN && typeof fun == "function"){
 			try{
 				fun(this.resolve,this.reject);
 			}catch(e){
@@ -93,20 +106,16 @@ module.exports = function(nextTick){
 	}
 
 	Promise_.defer = function(){
-		var _resolve,_reject;
-		var _promise = new Promise_(function(ok,no){
-			_resolve = ok;
-			_reject = no;
-		});
+		var _promise = new Promise_(FUN);
 		return {
 			promise: _promise,
-			resolve: _resolve,
-			reject: _reject
+			resolve: _promise.resolve,
+			reject: _promise.reject
 		}
 	}
 
 	Promise_.resolve = function(obj){
-		if(obj instanceof Promise_) return obj;
+		if(isPromise(obj)) return obj;
 		return new Promise_(function(ok,no){
 			ok(obj);
 		})
@@ -118,24 +127,28 @@ module.exports = function(nextTick){
 		})
 	}
 
+	Promise.prototype.toString = function () {
+	    return "[object Promise]";
+	}
+
 	Promise_.prototype.then = function(ok,no){
 		var status = this.status;
 		var defer = Promise_.defer()
 			,promise = defer.promise
 			
-		// if(!~status){
-		//  this.events.push([ok,no,promise]);
-		// }else if(status && typeof ok == "function"){
-		//  runThen(ok,this.value,promise,status);
-		// }else if(!status && typeof no == "function"){
-		//  runThen(no,this.reason,promise,status)
-		// }else{
-		//  if(status) defer.resolve(this.value)
-		//  else defer.reject(this.reason);
-		// }
+		if(!~status){
+			this._events.push([ok,no,promise]);
+		}else if(status && typeof ok == "function"){
+			runThen(ok,this.value,promise,status);
+		}else if(!status && typeof no == "function"){
+			runThen(no,this.reason,promise,status)
+		}else{
+			if(status) defer.resolve(this.value)
+			else defer.reject(this.reason);
+		}
 
-		this._events.push([ok,no,promise]);
-		runThens.call(this)
+		// this._events.push([ok,no,promise]);
+		// runThens.call(this)
 		return promise;
 	}
 
@@ -148,9 +161,7 @@ module.exports = function(nextTick){
 		}else{
 			this.reason = arg;
 		}
-		nextTick(function(){
-			runThens.call(self)
-		})
+		runThens.call(self)
 	}
 
 	function runThens(){
@@ -159,35 +170,40 @@ module.exports = function(nextTick){
 			,_event = self._events
 			,arg = self.status ? self.value : self.reason
 			,FnNumb = self.status ? 0 : 1;
-		while(_event.length){
+		//while(_event.length){
+		for(var i=0; i<_event.length; i++){
 			(function(eArr){
 				var resolve,reject
 				var fn = eArr[FnNumb]
 					,nextQ = eArr[2]
 				runThen(fn,arg,nextQ,self.status);
-			})(_event.shift())
+			})(_event[i])
+			// })(_event.shift())
 		}
+		_event = [];
 	}
 
 	function runThen(fn,arg,nextQ,status){
-		var resolve,reject
-		if(nextQ){
-			resolve = nextQ.resolve
-			reject = nextQ.reject 
-		}
+		var resolve = nextQ.resolve
+			,reject = nextQ.reject
+		// if(nextQ){
+		// 	resolve = nextQ.resolve
+		// 	reject = nextQ.reject 
+		// }
 		if(typeof fn == 'function'){
 			nextTick(function(){
 				var nextPromise;
 				try{
 					nextPromise = fn(arg)
 				}catch(e){
-					if(reject) reject(e)
-					else throw e;
+					reject(e)
+					// if(reject) 
+					// else throw e;
 					return;
 				}
-				if(resolve) resolve(nextPromise);
+				resolve(nextPromise);
 			})
-		}else if(nextQ){
+		}else{
 			if (status) resolve(arg)
 			else reject(arg)
 		}
