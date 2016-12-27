@@ -1,6 +1,6 @@
 # easy-promise
 Pnly Promises/A+ implementation
-If you want to make a more powerful `Promise` class, it is recommended to use the [extend-promise] (https://github.com/cnwhy/extend-promise) extension.
+If you want to make a more powerful `Promise` class, it is recommended to use the [extend-promise](https://github.com/cnwhy/extend-promise) extension.
 
 ## API
  - `new Promise`
@@ -10,8 +10,10 @@ If you want to make a more powerful `Promise` class, it is recommended to use th
  - `.then`
 
 ## Install
-npm install easy-promise
-bower install easy-promise
+**npm**  
+`npm install easy-promise`  
+**bower**  
+`bower install easy-promise`  
 
 ## Use
 ```
@@ -26,6 +28,6 @@ var Ep = require('esay-promise/setTimeout')
 ```
 
 ### In the no Promise browser
-`dist/easy-Promise.js` (gzip 1.7k)
-`dist/easy-Promise.min.js` (gzip 1.1k)
+ - `dist/easy-Promise.js` (gzip 1.8k)
+ - `dist/easy-Promise.min.js` (gzip 1.2k)
 
