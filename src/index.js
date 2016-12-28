@@ -105,7 +105,7 @@ module.exports = function(nextTick){
 		})
 	}
 
-	Promise.prototype.toString = function () {
+	Promise_.prototype.toString = function () {
 	    return "[object Promise]";
 	}
 
