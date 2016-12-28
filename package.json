@@ -5,6 +5,7 @@
   "main": "nextTick.js",
   "scripts": {
     "test": "gulp test",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/*.js",
     "build": "gulp build"
   },
   "repository": {
@@ -27,6 +28,7 @@
     "gulp-mocha": "^3.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",
+    "mocha": "^3.2.0",
     "promises-aplus-tests": "^2.1.2"
   }
 }
