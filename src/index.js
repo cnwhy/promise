@@ -1,4 +1,3 @@
-"use strict";
 module.exports = function(nextTick){
 	var FUN = function(){};
 	function Resolve(promise, x) {
@@ -36,12 +35,12 @@ module.exports = function(nextTick){
 		return obj instanceof Promise_;
 	}
 
-	function bind(fun,self){
-		var arg = Array.prototype.slice.call(arguments,2);
-		return function(){
-			fun.apply(self,arg.concat(Array.prototype.slice.call(arguments)));
-		}
-	}
+	// function bind(fun,self){
+	// 	var arg = Array.prototype.slice.call(arguments,2);
+	// 	return function(){
+	// 		fun.apply(self,arg.concat(Array.prototype.slice.call(arguments)));
+	// 	}
+	// }
 
 	function Promise_(fun){
 		//var defer = this.defer = new Defer(this);
@@ -104,6 +103,23 @@ module.exports = function(nextTick){
 			no(err);
 		})
 	}
+	Promise_.all = function(arr){
+		if(Object.prototype.toString.call(arr) !== "[object Array]") throw new TypeError('The argument is not an array!')
+		return new Promise_(function(ok,no){
+			var result = [], _n = 0;
+			var count = arr.length;
+			var su = function(i){
+				return function(v){
+					result[i]=v;
+					if(++_n == count) ok(result);
+				}
+			}
+			if(count<=0) return ok([]);
+			for(var i =0; i < count; i++){
+				Promise_.resolve(arr[i]).then(su(i),no);
+			}
+		})
+	}
 
 	Promise_.prototype.toString = function () {
 	    return "[object Promise]";
@@ -129,7 +145,17 @@ module.exports = function(nextTick){
 		// runThens.call(this)
 		return promise;
 	}
-
+	Promise_.prototype['catch'] = function(fn){
+		return this.then(null,fn);
+	}
+	Promise_.prototype['finally'] = function(fn){
+		if(typeof fn !== "function") return this;
+		return this.then(function(v){
+			return Promise_.resolve(fn()).then(function(){return v})
+		},function(err){
+			return Promise_.resolve(fn()).then(function(){throw err;})
+		});
+	}
 	function changeStatus(status,arg){
 		var self = this;
 		if(~this.status) return;

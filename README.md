@@ -7,7 +7,10 @@ If you want to make a more powerful `Promise` class, it is recommended to use th
  - `Promise.defer`
  - `Promise.resolve`
  - `Promise.reject`
+ - `Promise.all`
  - `.then`
+ - `.catch`
+ - `.finally`
 
 ## Install
 **npm**  
