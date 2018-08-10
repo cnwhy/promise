@@ -35,13 +35,6 @@ module.exports = function(nextTick){
 		return obj instanceof Promise_;
 	}
 
-	// function bind(fun,self){
-	// 	var arg = Array.prototype.slice.call(arguments,2);
-	// 	return function(){
-	// 		fun.apply(self,arg.concat(Array.prototype.slice.call(arguments)));
-	// 	}
-	// }
-
 	function Promise_(fun){
 		//var defer = this.defer = new Defer(this);
 		var self = this;
@@ -141,8 +134,6 @@ module.exports = function(nextTick){
 			else defer.reject(this.reason);
 		}
 
-		// this._events.push([ok,no,promise]);
-		// runThens.call(this)
 		return promise;
 	}
 	Promise_.prototype['catch'] = function(fn){
@@ -190,10 +181,7 @@ module.exports = function(nextTick){
 	function runThen(fn,arg,nextQ,status){
 		var resolve = nextQ.resolve
 			,reject = nextQ.reject
-		// if(nextQ){
-		// 	resolve = nextQ.resolve
-		// 	reject = nextQ.reject 
-		// }
+
 		if(typeof fn == 'function'){
 			nextTick(function(){
 				var nextPromise;
@@ -201,8 +189,6 @@ module.exports = function(nextTick){
 					nextPromise = fn(arg)
 				}catch(e){
 					reject(e)
-					// if(reject) 
-					// else throw e;
 					return;
 				}
 				resolve(nextPromise);

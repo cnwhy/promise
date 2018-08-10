@@ -1,6 +1,6 @@
 {
   "name": "easy-promise",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Pnly Promises/A+ implementation",
   "main": "nextTick.js",
   "scripts": {
@@ -23,12 +23,15 @@
   "homepage": "https://github.com/cnwhy/promise#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-browserify": "^0.5.1",
+    "gulp-clean": "^0.4.0",
     "gulp-header": "^1.8.8",
     "gulp-mocha": "^3.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",
     "mocha": "^3.2.0",
-    "promises-aplus-tests": "^2.1.2"
+    "promises-aplus-tests": "^2.1.2",
+    "rollup": "^0.64.1",
+    "rollup-plugin-commonjs": "^9.1.5",
+    "rollup-plugin-node-resolve": "^3.3.0"
   }
 }
