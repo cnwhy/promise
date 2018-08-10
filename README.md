@@ -8,9 +8,10 @@ If you want to make a more powerful `Promise` class, it is recommended to use th
  - `Promise.resolve`
  - `Promise.reject`
  - `Promise.all`
- - `.then`
- - `.catch`
- - `.finally`
+
+ - `Promise.prototype.then`
+ - `Promise.prototype.catch`
+ - `Promise.prototype.finally`
 
 ## Install
 **npm**  
@@ -31,6 +32,6 @@ var Ep = require('esay-promise/setTimeout')
 ```
 
 ### In the no Promise browser
- - `dist/easy-Promise.js` (gzip 1.8k)
- - `dist/easy-Promise.min.js` (gzip 1.2k)
+ - `dist/easy-Promise.js` 4.9k(gzip 1.6k)
+ - `dist/easy-Promise.min.js` 2.5k(gzip 1.1k)
 
